@@ -13,15 +13,15 @@ import java.util.regex.Pattern;
 /**
  * Правила выполнения домашнего задания:
  *
- * 1. Вся работа выполняется в файле доамашнего задания
+ * 1. Вся работа выполняется в файле домашнего задания
  *      Если вас просят создать класс - его надо создать вложенным, т.е. внутри класса HomeWorkN
  *      вы создаете класс MyClass {} (все в одном файле)
  * 2. Задание считается выполненным если все тесты пройдены.
  *      Тест выполнен если напротив него находится знак ✅
- * 3. Что бы запустить тесты нажмите значек запуска кода напротив мтода main.
- *      ‼️ВАЖНО‼️ Вся работа в модкле ведется на JDK-17, перед запуском скачайте его и установите
+ * 3. Что бы запустить тесты нажмите значок запуска кода напротив метода main.
+ *      ‼️ВАЖНО‼️ Вся работа в модуле ведется на JDK-17, перед запуском скачайте его и установите
  *      правильный JDK и уровень языка в Settings -> Project Structure
- *      Если у тебя не выбран JDK17 toList() бдует выдавать ошибку
+ *      Если у тебя не выбран JDK17 toList() будет выдавать ошибку
  */
 public class HomeWork2 {
     public static class LoginValidationException extends Exception {
@@ -31,7 +31,7 @@ public class HomeWork2 {
     /**
      * Задание:
      * 1. Создайте вложенный класс LoginValidationException, унаследуйте его от Exception
-     * 2. Реализуйте проверку "Логина" в методе validateLogin по следуюзим правилам:
+     * 2. Реализуйте проверку "Логина" в методе validateLogin по следующим правилам:
      *     - должен содержать только латинские буквы, цифры и знак подчеркивания
      *     - должен содержать как минимум одну маленькую, одну большую букву, цифру и нижнее подчеркивание
      *     - максимальная длинна логина- 20 символов
@@ -45,9 +45,14 @@ public class HomeWork2 {
 
     public static void validateLogin(String login) throws LoginValidationException {
         //Место для Вашего кода из пункта 2
-        Pattern pattern = Pattern.compile("[A-Za-z0-9_]");
-        Matcher matcher = pattern.matcher(login);
-        while (matcher.matches() == false) {
+        if (login.length()<=20) {
+            Pattern pattern = Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*_)");
+            Matcher matcher = pattern.matcher(login);
+            while (!matcher.find()) {
+                throw new LoginValidationException();
+            }
+        }
+        else {
             throw new LoginValidationException();
         }
     }
@@ -117,7 +122,7 @@ public class HomeWork2 {
             antiCheatList.addAll(checkLoginResults.stream().map(Object::toString).toList());
             antiCheatList.add(sb.toString());
             calcHash(antiCheatList);
-        };
+        }
 
         public static String bytesToHex(byte[] bytes) {
             char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
